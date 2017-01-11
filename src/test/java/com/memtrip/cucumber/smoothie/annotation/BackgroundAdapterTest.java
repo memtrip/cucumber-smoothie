@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -29,7 +30,6 @@ public class BackgroundAdapterTest {
         elementList.add(element1);
 
         BackgroundModel model = new BackgroundModel();
-        model.setValue("background");
 
         ModelAdapter adapter = mock(ModelAdapter.class);
         when(adapter.getModel(element1, BackgroundModel.class)).thenReturn(model);
@@ -45,13 +45,16 @@ public class BackgroundAdapterTest {
         List mirrors = new ArrayList<>();
         TypeAdapter typeAdapter = mock(TypeAdapter.class);
         when(typeAdapter.getType(mirrors)).thenReturn(Background.class.getName());
+        when(typeAdapter.getName(element1)).thenReturn("Background");
 
         // when
         BackgroundAdapter backgroundAdapter = new BackgroundAdapter(adapter, behaviourAdapter, typeAdapter);
 
         // then
         BackgroundModel backgroundModel = backgroundAdapter.background(elementList);
-        assertEquals("background", backgroundModel.getValue());
+        assertNull(backgroundModel.getValue());
+        assertEquals("Background", backgroundModel.getClassName());
+
         assertEquals("a $100 microwave was sold on 2015-11-03", backgroundModel.getBehaviours().get(0).getValue());
     }
 }

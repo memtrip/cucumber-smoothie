@@ -27,6 +27,5 @@ public class FileUtil {
         }
 
         return result.toString();
-
     }
 }

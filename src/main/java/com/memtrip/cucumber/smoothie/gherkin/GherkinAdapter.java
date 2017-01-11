@@ -4,7 +4,8 @@ import com.memtrip.cucumber.smoothie.annotation.model.BackgroundModel;
 import com.memtrip.cucumber.smoothie.annotation.model.FeatureModel;
 import com.memtrip.cucumber.smoothie.annotation.model.ScenarioModel;
 import com.memtrip.cucumber.smoothie.annotation.model.behaviour.BehaviourModel;
-import gherkin.ast.Step;
+
+import com.memtrip.cucumber.smoothie.gherkin.model.*;
 import gherkin.pickles.Pickle;
 import gherkin.pickles.PickleStep;
 
@@ -13,10 +14,12 @@ import java.util.List;
 
 public class GherkinAdapter {
     private GherkinParser gherkinParser;
+    private ArgumentAdapter argumentAdapter;
     private FileUtil fileUtil;
 
-    public GherkinAdapter(GherkinParser gherkinParser, FileUtil fileUtil) {
+    public GherkinAdapter(GherkinParser gherkinParser, ArgumentAdapter argumentAdapter, FileUtil fileUtil) {
         this.gherkinParser = gherkinParser;
+        this.argumentAdapter = argumentAdapter;
         this.fileUtil = fileUtil;
     }
 
@@ -31,29 +34,58 @@ public class GherkinAdapter {
         List<ScenarioPickle> scenarioPickles = new ArrayList<>();
 
         List<Pickle> pickles = getPickles(featureModel);
-        for (ScenarioModel scenarioModel : featureModel.getScenarios()) {
-            for (int i = 0; i < pickles.size(); i++) {
+        for (ScenarioModel scenarioModel : getScenariosWithBackground(featureModel)) {
+            for (Pickle pickle : pickles) {
                 ScenarioPickle scenarioPickle = new ScenarioPickle();
-                scenarioPickle.setClassName(scenarioModel.getClassName() + "_" + i);
-                scenarioPickle.setSteps(scenarioSteps(scenarioModel.getBehaviours(), pickles.get(i)));
+                scenarioPickle.setClassName(scenarioModel.getClassName());
+                scenarioPickle.setBehaviourPickles(behaviourPickles(scenarioModel.getBehaviours(), pickle));
+                scenarioPickles.add(scenarioPickle);
             }
         }
 
         return scenarioPickles;
     }
 
-    private List<ScenarioSteps> scenarioSteps(List<BehaviourModel> behaviours, Pickle pickle) {
+    private List<ScenarioModel> getScenariosWithBackground(FeatureModel featureModel) {
+        List<ScenarioModel> scenarioModels = new ArrayList<>();
 
-        List<ScenarioSteps> scenarioSteps = new ArrayList<>();
+        if (featureModel.getBackground() != null) {
+            scenarioModels.add(convertBackgroundToScenarioModel(featureModel.getBackground()));
+        }
+
+        scenarioModels.addAll(featureModel.getScenarios());
+
+        return scenarioModels;
+    }
+
+    private ScenarioModel convertBackgroundToScenarioModel(BackgroundModel backgroundModel) {
+        ScenarioModel scenarioModel = new ScenarioModel();
+        scenarioModel.setClassName(backgroundModel.getClassName());
+        scenarioModel.setBehaviours(backgroundModel.getBehaviours());
+        return scenarioModel;
+    }
+
+    private List<BehaviourPickle> behaviourPickles(List<BehaviourModel> behaviours, Pickle pickle) {
+
+        List<BehaviourPickle> behaviourPickles = new ArrayList<>();
 
         for (int i = 0; i < behaviours.size(); i++) {
             BehaviourModel behaviourModel = behaviours.get(i);
             PickleStep pickleStep = pickle.getSteps().get(i);
 
-            System.out.print("");
+            List<BehaviourPickleArgument> arguments = argumentAdapter.getArgumentsFromPickleValue(
+                    behaviourModel.getValue(),
+                    pickleStep.getText()
+            );
+
+            BehaviourPickle behaviourPickle = new BehaviourPickle();
+            behaviourPickle.setMethodName(behaviourModel.getMethodName());
+            behaviourPickle.setArguments(arguments);
+
+            behaviourPickles.add(behaviourPickle);
         }
 
-        return scenarioSteps;
+        return behaviourPickles;
     }
 
     private List<Pickle> getPickles(FeatureModel featureModel) {

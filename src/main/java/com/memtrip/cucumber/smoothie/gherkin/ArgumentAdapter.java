@@ -1,5 +1,7 @@
 package com.memtrip.cucumber.smoothie.gherkin;
 
+import com.memtrip.cucumber.smoothie.gherkin.model.BehaviourPickleArgument;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -13,11 +15,11 @@ public class ArgumentAdapter {
         this.argumentTypeMatcher = argumentTypeMatcher;
     }
 
-    List<BehaviourArgument> getArgumentsFromPickleValue(String behaviourValue, String pickleValue) {
+    List<BehaviourPickleArgument> getArgumentsFromPickleValue(String behaviourValue, String pickleValue) {
 
         List<String> argumentIndicators = getArgumentIndicators(behaviourValue);
 
-        List<BehaviourArgument> arguments = getArguments(getBehaviourPieces(behaviourValue), pickleValue);
+        List<BehaviourPickleArgument> arguments = getArguments(getBehaviourPieces(behaviourValue), pickleValue);
 
         for (int i = 0; i < arguments.size(); i++) {
             arguments.get(i).setKey(removeArgFormatting(argumentIndicators.get(i)));
@@ -49,9 +51,9 @@ public class ArgumentAdapter {
         return behaviourValueWithArgMatchers.split(ARG_MATCHER);
     }
 
-    private List<BehaviourArgument> getArguments(String[] behaviourPieces, String pickleValue) {
+    private List<BehaviourPickleArgument> getArguments(String[] behaviourPieces, String pickleValue) {
 
-        List<BehaviourArgument> arguments = new ArrayList<>();
+        List<BehaviourPickleArgument> arguments = new ArrayList<>();
 
         Matcher matcher = argumentTypeMatcher.matchArgument(
                 getPickleArgumentString(behaviourPieces, pickleValue));
@@ -65,11 +67,11 @@ public class ArgumentAdapter {
             do {
                 String argument = matcher.group();
 
-                BehaviourArgument behaviourArgument = new BehaviourArgument();
-                behaviourArgument.setValue(removeLiteralQuotes(argument));
-                behaviourArgument.setType(argumentTypeMatcher.getType(argument));
+                BehaviourPickleArgument behaviourPickleArgument = new BehaviourPickleArgument();
+                behaviourPickleArgument.setValue(removeLiteralQuotes(argument));
+                behaviourPickleArgument.setType(argumentTypeMatcher.getType(argument));
 
-                arguments.add(behaviourArgument);
+                arguments.add(behaviourPickleArgument);
 
                 matcher.appendReplacement(sb, "");
                 result = matcher.find();

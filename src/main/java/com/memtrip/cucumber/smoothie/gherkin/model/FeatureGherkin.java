@@ -1,4 +1,4 @@
-package com.memtrip.cucumber.smoothie.gherkin;
+package com.memtrip.cucumber.smoothie.gherkin.model;
 
 import java.util.List;
 

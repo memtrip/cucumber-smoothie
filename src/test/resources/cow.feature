@@ -1,5 +1,8 @@
 Feature: Cow
 
+    #Background:
+    #    Given a cow that was born on 2016-12-01 and has a name of "Nelly Newton"
+
     Scenario Outline: feeding a suckler cow
         Given the cow weighs <weight> kg
         When we calculate the feeding requirements

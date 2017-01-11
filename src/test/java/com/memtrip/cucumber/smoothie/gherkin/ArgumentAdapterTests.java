@@ -1,5 +1,6 @@
 package com.memtrip.cucumber.smoothie.gherkin;
 
+import com.memtrip.cucumber.smoothie.gherkin.model.BehaviourPickleArgument;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -27,13 +28,13 @@ public class ArgumentAdapterTests {
         ArgumentAdapter argumentAdapter = new ArgumentAdapter(argumentTypeMatcher);
 
         // then
-        List<BehaviourArgument> args =
+        List<BehaviourPickleArgument> args =
                 argumentAdapter.getArgumentsFromPickleValue(behaviourValue, pickleValue);
 
         assertEquals(1, args.size());
         assertEquals("weight", args.get(0).getKey());
         assertEquals("450", args.get(0).getValue());
-        assertEquals(BehaviourArgument.Type.INT, args.get(0).getType());
+        assertEquals(BehaviourPickleArgument.Type.INT, args.get(0).getType());
     }
 
     @Test
@@ -47,13 +48,13 @@ public class ArgumentAdapterTests {
         ArgumentAdapter argumentAdapter = new ArgumentAdapter(argumentTypeMatcher);
 
         // then
-        List<BehaviourArgument> args =
+        List<BehaviourPickleArgument> args =
                 argumentAdapter.getArgumentsFromPickleValue(behaviourValue, pickleValue);
 
         assertEquals(1, args.size());
         assertEquals("weight", args.get(0).getKey());
         assertEquals("7.12", args.get(0).getValue());
-        assertEquals(BehaviourArgument.Type.DOUBLE, args.get(0).getType());
+        assertEquals(BehaviourPickleArgument.Type.DOUBLE, args.get(0).getType());
     }
 
     @Test
@@ -67,13 +68,13 @@ public class ArgumentAdapterTests {
         ArgumentAdapter argumentAdapter = new ArgumentAdapter(argumentTypeMatcher);
 
         // then
-        List<BehaviourArgument> args =
+        List<BehaviourPickleArgument> args =
                 argumentAdapter.getArgumentsFromPickleValue(behaviourValue, pickleValue);
 
         assertEquals(1, args.size());
         assertEquals("alive", args.get(0).getKey());
         assertEquals("true", args.get(0).getValue());
-        assertEquals(BehaviourArgument.Type.BOOLEAN, args.get(0).getType());
+        assertEquals(BehaviourPickleArgument.Type.BOOLEAN, args.get(0).getType());
     }
 
     @Test
@@ -87,13 +88,13 @@ public class ArgumentAdapterTests {
         ArgumentAdapter argumentAdapter = new ArgumentAdapter(argumentTypeMatcher);
 
         // then
-        List<BehaviourArgument> args =
+        List<BehaviourPickleArgument> args =
                 argumentAdapter.getArgumentsFromPickleValue(behaviourValue, pickleValue);
 
         assertEquals(1, args.size());
         assertEquals("years", args.get(0).getKey());
         assertEquals("19000000000000000000", args.get(0).getValue());
-        assertEquals(BehaviourArgument.Type.LONG, args.get(0).getType());
+        assertEquals(BehaviourPickleArgument.Type.LONG, args.get(0).getType());
     }
 
     @Test
@@ -107,13 +108,13 @@ public class ArgumentAdapterTests {
         ArgumentAdapter argumentAdapter = new ArgumentAdapter(argumentTypeMatcher);
 
         // then
-        List<BehaviourArgument> args =
+        List<BehaviourPickleArgument> args =
                 argumentAdapter.getArgumentsFromPickleValue(behaviourValue, pickleValue);
 
         assertEquals(1, args.size());
         assertEquals("dob", args.get(0).getKey());
         assertEquals("2016-06-27", args.get(0).getValue());
-        assertEquals(BehaviourArgument.Type.DATE, args.get(0).getType());
+        assertEquals(BehaviourPickleArgument.Type.DATE, args.get(0).getType());
     }
 
     @Test
@@ -126,17 +127,17 @@ public class ArgumentAdapterTests {
         ArgumentAdapter argumentAdapter = new ArgumentAdapter(argumentTypeMatcher);
 
         // then
-        List<BehaviourArgument> args =
+        List<BehaviourPickleArgument> args =
                 argumentAdapter.getArgumentsFromPickleValue(behaviourValue, pickleValue);
 
         assertEquals(2, args.size());
         assertEquals("first_initial", args.get(0).getKey());
         assertEquals("S", args.get(0).getValue());
-        assertEquals(BehaviourArgument.Type.CHAR, args.get(0).getType());
+        assertEquals(BehaviourPickleArgument.Type.CHAR, args.get(0).getType());
 
         assertEquals("second_initial", args.get(1).getKey());
         assertEquals("K", args.get(1).getValue());
-        assertEquals(BehaviourArgument.Type.CHAR, args.get(1).getType());
+        assertEquals(BehaviourPickleArgument.Type.CHAR, args.get(1).getType());
     }
 
     @Test
@@ -150,13 +151,13 @@ public class ArgumentAdapterTests {
         ArgumentAdapter argumentAdapter = new ArgumentAdapter(argumentTypeMatcher);
 
         // then
-        List<BehaviourArgument> args =
+        List<BehaviourPickleArgument> args =
                 argumentAdapter.getArgumentsFromPickleValue(behaviourValue, pickleValue);
 
         assertEquals(1, args.size());
         assertEquals("name", args.get(0).getKey());
         assertEquals("Samuel Kirton", args.get(0).getValue());
-        assertEquals(BehaviourArgument.Type.STRING, args.get(0).getType());
+        assertEquals(BehaviourPickleArgument.Type.STRING, args.get(0).getType());
     }
 
     @Test
@@ -170,17 +171,17 @@ public class ArgumentAdapterTests {
         ArgumentAdapter argumentAdapter = new ArgumentAdapter(argumentTypeMatcher);
 
         // then
-        List<BehaviourArgument> args =
+        List<BehaviourPickleArgument> args =
                 argumentAdapter.getArgumentsFromPickleValue(behaviourValue, pickleValue);
 
         assertEquals(2, args.size());
         assertEquals("name", args.get(0).getKey());
         assertEquals("Samuel Kirton", args.get(0).getValue());
-        assertEquals(BehaviourArgument.Type.STRING, args.get(0).getType());
+        assertEquals(BehaviourPickleArgument.Type.STRING, args.get(0).getType());
 
         assertEquals("say", args.get(1).getKey());
         assertEquals("moooooooooo", args.get(1).getValue());
-        assertEquals(BehaviourArgument.Type.STRING, args.get(1).getType());
+        assertEquals(BehaviourPickleArgument.Type.STRING, args.get(1).getType());
     }
 
     @Test
@@ -193,20 +194,20 @@ public class ArgumentAdapterTests {
         ArgumentAdapter argumentAdapter = new ArgumentAdapter(argumentTypeMatcher);
 
         // then
-        List<BehaviourArgument> args =
+        List<BehaviourPickleArgument> args =
                 argumentAdapter.getArgumentsFromPickleValue(behaviourValue, pickleValue);
 
         assertEquals(3, args.size());
         assertEquals("weight", args.get(0).getKey());
         assertEquals("23", args.get(0).getValue());
-        assertEquals(BehaviourArgument.Type.INT, args.get(0).getType());
+        assertEquals(BehaviourPickleArgument.Type.INT, args.get(0).getType());
 
         assertEquals("say", args.get(1).getKey());
         assertEquals("whhhhhyyy?", args.get(1).getValue());
-        assertEquals(BehaviourArgument.Type.STRING, args.get(1).getType());
+        assertEquals(BehaviourPickleArgument.Type.STRING, args.get(1).getType());
 
         assertEquals("pounds", args.get(2).getKey());
         assertEquals("1.7", args.get(2).getValue());
-        assertEquals(BehaviourArgument.Type.DOUBLE, args.get(2).getType());
+        assertEquals(BehaviourPickleArgument.Type.DOUBLE, args.get(2).getType());
     }
 }

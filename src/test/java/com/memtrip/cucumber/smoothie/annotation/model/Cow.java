@@ -10,8 +10,8 @@ class Cow {
 //    @Background
 //    static class background {
 //
-//        @Given("a $100 microwave was sold on 2015-11-03")
-//        public void a_microwave_was_sold(double price, Date date) {
+//        @Given("a cow that was born on 2016-12-01 and has a name of \"Nelly Newton\"")
+//        public void a_cow_that_was_born_on_dob_and_has_a_name_of_name(Date dob, String name) {
 //            // run any setup here
 //        }
 //    }

@@ -1,10 +1,10 @@
-package com.memtrip.cucumber.smoothie.gherkin;
+package com.memtrip.cucumber.smoothie.gherkin.model;
 
 import java.util.List;
 
-public class ScenarioPickle {
+public class BackgroundPickle {
     private String className;
-    private List<ScenarioSteps> steps;
+    private List<BehaviourPickle> steps;
 
     public String getClassName() {
         return className;
@@ -14,11 +14,11 @@ public class ScenarioPickle {
         this.className = methodName;
     }
 
-    public List<ScenarioSteps> getSteps() {
+    public List<BehaviourPickle> getSteps() {
         return steps;
     }
 
-    public void setSteps(List<ScenarioSteps> steps) {
+    public void setSteps(List<BehaviourPickle> steps) {
         this.steps = steps;
     }
 }

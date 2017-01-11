@@ -24,6 +24,7 @@ class BackgroundAdapter {
                 String type = typeAdapter.getType(element.getAnnotationMirrors());
                 if (type != null && type.equals(Background.class.getName())) {
                     BackgroundModel backgroundModel = modelAdapter.getModel(element, BackgroundModel.class);
+                    backgroundModel.setClassName(typeAdapter.getName(element));
                     backgroundModel.setBehaviours(behaviourAdapter.behaviours(element.getEnclosedElements()));
                     return backgroundModel;
                 }

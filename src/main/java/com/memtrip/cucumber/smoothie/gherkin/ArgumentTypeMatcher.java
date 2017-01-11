@@ -1,5 +1,7 @@
 package com.memtrip.cucumber.smoothie.gherkin;
 
+import com.memtrip.cucumber.smoothie.gherkin.model.BehaviourPickleArgument;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,21 +35,21 @@ public class ArgumentTypeMatcher {
         return argumentPattern.matcher(value);
     }
 
-    BehaviourArgument.Type getType(String argument) {
+    BehaviourPickleArgument.Type getType(String argument) {
         if (isDate(argument)) {
-            return BehaviourArgument.Type.DATE;
+            return BehaviourPickleArgument.Type.DATE;
         } else if (isString(argument)) {
-            return BehaviourArgument.Type.STRING;
+            return BehaviourPickleArgument.Type.STRING;
         } else if (isChar(argument)) {
-            return BehaviourArgument.Type.CHAR;
+            return BehaviourPickleArgument.Type.CHAR;
         } else if (isDouble(argument)) {
-            return BehaviourArgument.Type.DOUBLE;
+            return BehaviourPickleArgument.Type.DOUBLE;
         } else if (isBoolean(argument)) {
-            return BehaviourArgument.Type.BOOLEAN;
+            return BehaviourPickleArgument.Type.BOOLEAN;
         } else if (isInt(argument)) {
-            return BehaviourArgument.Type.INT;
+            return BehaviourPickleArgument.Type.INT;
         } else {
-            return BehaviourArgument.Type.LONG;
+            return BehaviourPickleArgument.Type.LONG;
         }
     }
 

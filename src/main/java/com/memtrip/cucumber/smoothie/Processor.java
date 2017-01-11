@@ -2,17 +2,13 @@ package com.memtrip.cucumber.smoothie;
 
 import com.google.auto.service.AutoService;
 import com.memtrip.cucumber.smoothie.annotation.AnnotationAdapter;
-import com.memtrip.cucumber.smoothie.annotation.model.ScenarioModel;
-import com.memtrip.cucumber.smoothie.gherkin.FeatureGherkin;
-import com.memtrip.cucumber.smoothie.gherkin.GherkinAdapter;
+import com.memtrip.cucumber.smoothie.gherkin.*;
+import com.memtrip.cucumber.smoothie.gherkin.model.FeatureGherkin;
 import com.memtrip.cucumber.smoothie.spec.*;
 import com.memtrip.cucumber.smoothie.annotation.model.FeatureModel;
-import com.memtrip.cucumber.smoothie.gherkin.FileUtil;
-import com.memtrip.cucumber.smoothie.gherkin.GherkinParser;
 import gherkin.AstBuilder;
 import gherkin.Parser;
 import gherkin.pickles.Compiler;
-import gherkin.pickles.Pickle;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.ProcessingEnvironment;
@@ -41,6 +37,7 @@ public class Processor extends AbstractProcessor {
         GherkinAdapter gherkinAdapter =
                 new GherkinAdapter(
                         new GherkinParser(new Compiler(), new Parser<>(new AstBuilder())),
+                        new ArgumentAdapter(new ArgumentTypeMatcher()),
                         new FileUtil()
                 );
 

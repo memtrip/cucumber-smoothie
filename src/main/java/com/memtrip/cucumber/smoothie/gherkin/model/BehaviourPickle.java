@@ -1,10 +1,10 @@
-package com.memtrip.cucumber.smoothie.gherkin;
+package com.memtrip.cucumber.smoothie.gherkin.model;
 
 import java.util.List;
 
-public class ScenarioStep {
+public class BehaviourPickle {
     private String methodName;
-    List<BehaviourArgument> arguments;
+    List<BehaviourPickleArgument> arguments;
 
     public String getMethodName() {
         return methodName;
@@ -14,11 +14,11 @@ public class ScenarioStep {
         this.methodName = methodName;
     }
 
-    public List<BehaviourArgument> getArguments() {
+    public List<BehaviourPickleArgument> getArguments() {
         return arguments;
     }
 
-    public void setArguments(List<BehaviourArgument> arguments) {
+    public void setArguments(List<BehaviourPickleArgument> arguments) {
         this.arguments = arguments;
     }
 }

@@ -1,6 +1,6 @@
-package com.memtrip.cucumber.smoothie.gherkin;
+package com.memtrip.cucumber.smoothie.gherkin.model;
 
-public class BehaviourArgument {
+public class BehaviourPickleArgument {
     private String key;
     private String value;
     private Type type;
