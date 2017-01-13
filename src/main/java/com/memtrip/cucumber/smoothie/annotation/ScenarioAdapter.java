@@ -29,6 +29,7 @@ class ScenarioAdapter {
                     ScenarioModel scenarioModel = modelAdapter.getModel(element, ScenarioModel.class);
                     scenarioModel.setBehaviours(behaviourAdapter.behaviours(element.getEnclosedElements()));
                     scenarioModel.setClassName(typeAdapter.getName(element));
+                    scenarioModel.setPackageName(typeAdapter.getPackage(element));
                     scenarioModels.add(scenarioModel);
                 }
             }

@@ -1,4 +1,4 @@
-package com.memtrip.cucumber.smoothie;
+package com.memtrip.cucumber.smoothie.freemarker;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -11,12 +11,12 @@ import java.io.Writer;
 import java.util.Map;
 
 final class FreeMarker {
-    private Configuration mConfiguration;
+    private Configuration configuration;
 
     private static final String TEMPLATE_ENCODING = "UTF-8";
 
     FreeMarker() throws IOException {
-        mConfiguration = createConfiguration();
+        configuration = createConfiguration();
     }
 
     private Configuration createConfiguration() throws IOException {
@@ -27,16 +27,16 @@ final class FreeMarker {
         return configuration;
     }
 
-    String getMappedFileBodyFromTemplate(String fileName, Map<String, Object> map) {
+    String generate(String templateFileName, DataSource dataSource) {
         try {
-            return createFile(fileName, map);
+            return process(templateFileName, dataSource.map());
         } catch (Exception e) {
             throw new IllegalStateException("Mapping template FAILED: " + e.getMessage());
         }
     }
 
-    private String createFile(String file, Map<String, Object> map) throws TemplateException, IOException {
-        Template template = getTemplate(file);
+    private String process(String templateFileName, Map<String, Object> map) throws TemplateException, IOException {
+        Template template = getTemplate(templateFileName);
 
         Writer out = new StringWriter();
         template.process(map, out);
@@ -47,6 +47,6 @@ final class FreeMarker {
     }
 
     private Template getTemplate(String fileName) throws IOException {
-        return mConfiguration.getTemplate(fileName);
+        return configuration.getTemplate(fileName);
     }
 }

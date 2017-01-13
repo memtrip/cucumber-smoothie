@@ -7,15 +7,8 @@ import java.util.List;
 public class BackgroundModel implements Model {
     private String value;
     private String className;
+    private String packageName;
     private List<BehaviourModel> behaviours;
-
-    public String getClassName() {
-        return className;
-    }
-
-    public void setClassName(String className) {
-        this.className = className;
-    }
 
     public List<BehaviourModel> getBehaviours() {
         return behaviours;
@@ -23,6 +16,22 @@ public class BackgroundModel implements Model {
 
     public void setBehaviours(List<BehaviourModel> behaviours) {
         this.behaviours = behaviours;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
     }
 
     @Override

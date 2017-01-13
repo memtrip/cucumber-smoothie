@@ -2,14 +2,19 @@ package com.memtrip.cucumber.smoothie.gherkin;
 
 import com.memtrip.cucumber.smoothie.gherkin.model.BehaviourPickleArgument;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ArgumentTypeMatcher {
+class ArgumentTypeMatcher {
+    private Pattern keyPattern;
     private Pattern argumentPattern;
     private Pattern datePattern;
     private Pattern stringPattern;
     private Pattern charPattern;
+
+    private static final String KEY_PATTERN = "<(.*?)>|\\$([a-zA-Z_\\x7f-\\xff][a-zA-Z0-9_\\x7f-\\xff]*)";
 
     private static final String DATE_MATCHER = "[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])";
     private static final String STRING_MATCHER = "\"(.*?)\"";
@@ -17,7 +22,10 @@ public class ArgumentTypeMatcher {
     private static final String NUMBER_MATCHER = "[+-]?([0-9]*[.])?[0-9]+";
     private static final String BOOLEAN_MATCHER = "(true|false)";
 
-    public ArgumentTypeMatcher() {
+    ArgumentTypeMatcher() {
+
+        keyPattern = Pattern.compile(KEY_PATTERN);
+
         argumentPattern = Pattern.compile(DATE_MATCHER + "|" +
                 STRING_MATCHER + "|" +
                 CHAR_MATCHER + "|" +
@@ -25,13 +33,35 @@ public class ArgumentTypeMatcher {
                 BOOLEAN_MATCHER);
 
         datePattern = Pattern.compile(DATE_MATCHER);
-
         stringPattern = Pattern.compile(STRING_MATCHER);
-
         charPattern = Pattern.compile(CHAR_MATCHER);
     }
 
-    Matcher matchArgument(String value) {
+    List<String> getArgumentKeys(String value) {
+        List<String> args = new ArrayList<>();
+
+        Matcher matcher = keyPattern.matcher(value);
+
+        while (matcher.find()) {
+            String group = matcher.group()
+                    .replace("<", "")
+                    .replace(">", "")
+                    .replace("$", "");
+
+            args.add(group);
+        }
+
+        return args;
+    }
+
+    String[] removeArgumentKeysFromString(String value) {
+
+        return value
+                .replaceAll("  ", " ")
+                .split(KEY_PATTERN);
+    }
+
+    Matcher matchArguments(String value) {
         return argumentPattern.matcher(value);
     }
 

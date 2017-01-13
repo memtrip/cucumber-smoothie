@@ -1,5 +1,7 @@
 package com.memtrip.cucumber.smoothie.gherkin.model;
 
+import java.util.Objects;
+
 public class BehaviourPickleArgument {
     private String key;
     private String value;
@@ -37,5 +39,25 @@ public class BehaviourPickleArgument {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof BehaviourPickleArgument) {
+            BehaviourPickleArgument that = (BehaviourPickleArgument) o;
+
+            return Objects.equals(this.key, that.key)
+                    && Objects.equals(this.value, that.value)
+                    && Objects.equals(this.type, that.type);
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return 3 * Objects.hashCode(key)
+                + 5 * Objects.hashCode(value)
+                + 7 * Objects.hashCode(type);
     }
 }

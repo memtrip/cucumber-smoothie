@@ -45,7 +45,6 @@ public class BackgroundAdapterTest {
         List mirrors = new ArrayList<>();
         TypeAdapter typeAdapter = mock(TypeAdapter.class);
         when(typeAdapter.getType(mirrors)).thenReturn(Background.class.getName());
-        when(typeAdapter.getName(element1)).thenReturn("Background");
 
         // when
         BackgroundAdapter backgroundAdapter = new BackgroundAdapter(adapter, behaviourAdapter, typeAdapter);
@@ -53,7 +52,6 @@ public class BackgroundAdapterTest {
         // then
         BackgroundModel backgroundModel = backgroundAdapter.background(elementList);
         assertNull(backgroundModel.getValue());
-        assertEquals("Background", backgroundModel.getClassName());
 
         assertEquals("a $100 microwave was sold on 2015-11-03", backgroundModel.getBehaviours().get(0).getValue());
     }

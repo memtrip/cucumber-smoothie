@@ -5,58 +5,24 @@ import com.memtrip.cucumber.smoothie.gherkin.model.BehaviourPickleArgument;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-public class ArgumentAdapter {
+class ArgumentAdapter {
 
     private ArgumentTypeMatcher argumentTypeMatcher;
 
-    public ArgumentAdapter(ArgumentTypeMatcher argumentTypeMatcher) {
+    ArgumentAdapter(ArgumentTypeMatcher argumentTypeMatcher) {
         this.argumentTypeMatcher = argumentTypeMatcher;
     }
 
     List<BehaviourPickleArgument> getArgumentsFromPickleValue(String behaviourValue, String pickleValue) {
 
-        List<String> argumentIndicators = getArgumentIndicators(behaviourValue);
-
-        List<BehaviourPickleArgument> arguments = getArguments(getBehaviourPieces(behaviourValue), pickleValue);
-
-        for (int i = 0; i < arguments.size(); i++) {
-            arguments.get(i).setKey(removeArgFormatting(argumentIndicators.get(i)));
-        }
-
-        return arguments;
-    }
-
-    private List<String> getArgumentIndicators(String value) {
-        List<String> args = new ArrayList<>();
-
-        Pattern p = Pattern.compile("<(.*?)>");
-        Matcher matcher = p.matcher(value);
-
-        while (matcher.find()) {
-            args.add(matcher.group());
-        }
-
-        return args;
-    }
-
-    private String[] getBehaviourPieces(String behaviourValue) {
-
-        final String ARG_MATCHER = "%a";
-
-        String behaviourValueWithArgMatchers =
-                behaviourValue.replaceAll("<(.*?)>", ARG_MATCHER).replaceAll("  ", " ");
-
-        return behaviourValueWithArgMatchers.split(ARG_MATCHER);
-    }
-
-    private List<BehaviourPickleArgument> getArguments(String[] behaviourPieces, String pickleValue) {
-
         List<BehaviourPickleArgument> arguments = new ArrayList<>();
 
-        Matcher matcher = argumentTypeMatcher.matchArgument(
-                getPickleArgumentString(behaviourPieces, pickleValue));
+        String[] behaviourPieces = argumentTypeMatcher.removeArgumentKeysFromString(behaviourValue);
+        List<String> argumentIndicators = argumentTypeMatcher.getArgumentKeys(behaviourValue);
+        String pickleArgumentString = removeBehaviourTextFromPickleString(behaviourPieces, pickleValue);
+
+        Matcher matcher = argumentTypeMatcher.matchArguments(pickleArgumentString);
 
         boolean result = matcher.find();
 
@@ -64,17 +30,23 @@ public class ArgumentAdapter {
 
             StringBuffer sb = new StringBuffer();
 
+            int position = 0;
+
             do {
                 String argument = matcher.group();
 
                 BehaviourPickleArgument behaviourPickleArgument = new BehaviourPickleArgument();
                 behaviourPickleArgument.setValue(removeLiteralQuotes(argument));
                 behaviourPickleArgument.setType(argumentTypeMatcher.getType(argument));
+                behaviourPickleArgument.setKey(argumentIndicators.get(position));
 
                 arguments.add(behaviourPickleArgument);
 
                 matcher.appendReplacement(sb, "");
                 result = matcher.find();
+
+                position++;
+
             } while (result);
 
             matcher.appendTail(sb);
@@ -83,7 +55,7 @@ public class ArgumentAdapter {
         return arguments;
     }
 
-    private String getPickleArgumentString(String[] behaviourPieces, String pickleValue) {
+    private String removeBehaviourTextFromPickleString(String[] behaviourPieces, String pickleValue) {
 
         for (String behaviourPiece : behaviourPieces) {
             pickleValue = pickleValue.replace(behaviourPiece, " ");
@@ -94,9 +66,5 @@ public class ArgumentAdapter {
 
     private String removeLiteralQuotes(String literal) {
         return literal.replace("\"","").replace("\'","");
-    }
-
-    private String removeArgFormatting(String key) {
-        return key.replace("<", "").replace(">", "");
     }
 }

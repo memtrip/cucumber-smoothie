@@ -7,6 +7,7 @@ import java.util.List;
 public class ScenarioModel implements Model {
     private String value;
     private String className;
+    private String packageName;
     private List<BehaviourModel> behaviours;
 
     public String getClassName() {
@@ -15,6 +16,14 @@ public class ScenarioModel implements Model {
 
     public void setClassName(String className) {
         this.className = className;
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
     }
 
     public List<BehaviourModel> getBehaviours() {

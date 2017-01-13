@@ -2,15 +2,14 @@ package com.memtrip.cucumber.smoothie;
 
 import com.google.auto.service.AutoService;
 import com.memtrip.cucumber.smoothie.annotation.AnnotationAdapter;
+import com.memtrip.cucumber.smoothie.freemarker.Source;
 import com.memtrip.cucumber.smoothie.gherkin.*;
 import com.memtrip.cucumber.smoothie.gherkin.model.FeatureGherkin;
 import com.memtrip.cucumber.smoothie.spec.*;
 import com.memtrip.cucumber.smoothie.annotation.model.FeatureModel;
-import gherkin.AstBuilder;
-import gherkin.Parser;
-import gherkin.pickles.Compiler;
 
 import javax.annotation.processing.AbstractProcessor;
+import javax.annotation.processing.Filer;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
 import javax.lang.model.SourceVersion;
@@ -23,33 +22,32 @@ import java.util.Set;
 
 @AutoService(javax.annotation.processing.Processor.class)
 public class Processor extends AbstractProcessor {
-    private FreeMarker freeMarker;
+
+    private Source source;
 
     @Override
     public synchronized void init(ProcessingEnvironment env) {
-        freeMarker = getFreeMarker();
+        source = createMapper(env.getFiler());
     }
 
     @Override
     public boolean process(Set<? extends TypeElement> annoations, RoundEnvironment env) {
         Set<? extends Element> elements = env.getElementsAnnotatedWith(Feature.class);
 
-        GherkinAdapter gherkinAdapter =
-                new GherkinAdapter(
-                        new GherkinParser(new Compiler(), new Parser<>(new AstBuilder())),
-                        new ArgumentAdapter(new ArgumentTypeMatcher()),
-                        new FileUtil()
-                );
+        if (source != null && elements.size() > 0) {
 
-        List<FeatureModel> features = new AnnotationAdapter().getFeatureAnnotations(elements);
+            List<FeatureModel> featureModels = new AnnotationAdapter().getFeatureAnnotations(elements);
 
+            List<FeatureGherkin> featureGherkins = new GherkinAdapter().getFeatureGherkin(featureModels);
 
-        for (FeatureModel featureModel : features) {
-            FeatureGherkin featureGherkin = gherkinAdapter.create(featureModel);
-            System.out.print("");
+            String sourceCode = source.generate(featureGherkins);
+            String formattedSourceCode = source.format(sourceCode);
+            source.save("com.memtrip.cucumber.smoothie","CucumberRunner", formattedSourceCode);
+
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     @Override
@@ -69,9 +67,9 @@ public class Processor extends AbstractProcessor {
         return set;
     }
 
-    private FreeMarker getFreeMarker() {
+    private Source createMapper(Filer filer) {
         try {
-            return new FreeMarker();
+            return new Source(filer);
         } catch (IOException e) {
             return null;
         }

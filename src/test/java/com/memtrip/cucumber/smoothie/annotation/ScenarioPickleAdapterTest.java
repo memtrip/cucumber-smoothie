@@ -15,7 +15,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @SuppressWarnings("unchecked")
-public class ScenarioAdapterTest {
+public class ScenarioPickleAdapterTest {
 
     @Test
     public void scenarios() {

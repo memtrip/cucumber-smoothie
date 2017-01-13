@@ -6,6 +6,7 @@ import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.Name;
 import javax.lang.model.type.DeclaredType;
+import javax.lang.model.type.TypeMirror;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,5 +70,22 @@ public class TypeAdapterTest {
 
         // then
         assertEquals("Jeff_has_bought_a_microwave_for_price", typeAdapter.getName(element));
+    }
+
+    @Test
+    public void getPackage() {
+
+        // given
+        TypeAdapter typeAdapter = new TypeAdapter();
+
+        // when
+        TypeMirror typeMirror = mock(TypeMirror.class);
+        when(typeMirror.toString()).thenReturn("com.memtrip.cucumber.background");
+
+        Element element = mock(Element.class);
+        when(element.asType()).thenReturn(typeMirror);
+
+        // then
+        assertEquals("com.memtrip.cucumber.background", typeAdapter.getPackage(element));
     }
 }

@@ -4,7 +4,8 @@ import java.util.List;
 
 public class BehaviourPickle {
     private String methodName;
-    List<BehaviourPickleArgument> arguments;
+    private boolean isBackgroundBehaviour;
+    private List<BehaviourPickleArgument> arguments;
 
     public String getMethodName() {
         return methodName;
@@ -12,6 +13,14 @@ public class BehaviourPickle {
 
     public void setMethodName(String methodName) {
         this.methodName = methodName;
+    }
+
+    public boolean isBackgroundBehaviour() {
+        return isBackgroundBehaviour;
+    }
+
+    public void setBackgroundBehaviour(boolean backgroundBehaviour) {
+        isBackgroundBehaviour = backgroundBehaviour;
     }
 
     public List<BehaviourPickleArgument> getArguments() {

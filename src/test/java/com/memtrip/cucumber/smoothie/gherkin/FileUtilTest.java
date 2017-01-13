@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static junit.framework.TestCase.assertNotNull;
 
-public class FileUtilTests {
+public class FileUtilTest {
 
     @Test
     public void loadTestResource() {

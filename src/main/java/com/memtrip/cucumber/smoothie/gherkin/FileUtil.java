@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class FileUtil {
+class FileUtil {
 
     String getFile(String fileName) {
 
