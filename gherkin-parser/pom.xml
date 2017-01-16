@@ -6,7 +6,7 @@
 
     <groupId>com.memtrip.cucumber.smoothie</groupId>
     <artifactId>gherkin-parser</artifactId>
-    <version>1.0.31</version>
+    <version>1.0.0</version>
 
     <developers>
         <developer>

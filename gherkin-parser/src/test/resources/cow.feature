@@ -17,3 +17,9 @@ Feature: Cow
             |    5.0  |  295000000000000000 |     245 |
             |    57.5 |  315000000000000000 |     255 |
             |    6.31 |  370000000000000000 |     305 |
+
+    Scenario: a cow is ready to be milked
+        Given the cow weighs more than 150 kg
+        And the cow is more than 1 years 6 months and 31 days old
+        When the date is 2016-10-22
+        Then the cow should be milked

@@ -1,3 +1,18 @@
+/**
+ * Copyright 2013-present memtrip LTD.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.memtrip.cucumber.smoothie.annotation;
 
 import com.memtrip.cucumber.smoothie.annotation.model.behaviour.BehaviourModel;
@@ -33,7 +48,7 @@ public class BehaviourAdapterTest {
         when(modelAdapter.getModel(element1, BehaviourModel.class)).thenReturn(givenBehaviour);
 
         TypeAdapter typeAdapter = mock(TypeAdapter.class);
-        when(typeAdapter.getType(annotationMirrors)).thenReturn(Given.class.getName());
+        when(typeAdapter.getGherkinType(annotationMirrors)).thenReturn(Given.class.getName());
         when(typeAdapter.getName(element1)).thenReturn("there_are_10_coffees_left_in_the_machine");
 
         // when
@@ -66,7 +81,7 @@ public class BehaviourAdapterTest {
         when(modelAdapter.getModel(element1, BehaviourModel.class)).thenReturn(whenBehaviour);
 
         TypeAdapter typeAdapter = mock(TypeAdapter.class);
-        when(typeAdapter.getType(annotationMirrors)).thenReturn(When.class.getName());
+        when(typeAdapter.getGherkinType(annotationMirrors)).thenReturn(When.class.getName());
         when(typeAdapter.getName(element1)).thenReturn("I_press_the_coffee_button");
 
         // when
@@ -99,7 +114,7 @@ public class BehaviourAdapterTest {
         when(modelAdapter.getModel(element1, BehaviourModel.class)).thenReturn(thenBehaviour);
 
         TypeAdapter typeAdapter = mock(TypeAdapter.class);
-        when(typeAdapter.getType(annotationMirrors)).thenReturn(Then.class.getName());
+        when(typeAdapter.getGherkinType(annotationMirrors)).thenReturn(Then.class.getName());
         when(typeAdapter.getName(element1)).thenReturn("I_should_be_served_a_coffee");
 
         // when
@@ -132,7 +147,7 @@ public class BehaviourAdapterTest {
         when(modelAdapter.getModel(element1, BehaviourModel.class)).thenReturn(andBehaviour);
 
         TypeAdapter typeAdapter = mock(TypeAdapter.class);
-        when(typeAdapter.getType(annotationMirrors)).thenReturn(And.class.getName());
+        when(typeAdapter.getGherkinType(annotationMirrors)).thenReturn(And.class.getName());
         when(typeAdapter.getName(element1)).thenReturn("I_have_deposited");
 
         // when
@@ -165,7 +180,7 @@ public class BehaviourAdapterTest {
         when(modelAdapter.getModel(element1, BehaviourModel.class)).thenReturn(butBehaviour);
 
         TypeAdapter typeAdapter = mock(TypeAdapter.class);
-        when(typeAdapter.getType(annotationMirrors)).thenReturn(But.class.getName());
+        when(typeAdapter.getGherkinType(annotationMirrors)).thenReturn(But.class.getName());
         when(typeAdapter.getName(element1)).thenReturn("Jeff_forgot_his_credit_card");
 
         // when

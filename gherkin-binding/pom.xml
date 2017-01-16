@@ -6,6 +6,6 @@
 
     <groupId>com.memtrip.cucumber.smoothie</groupId>
     <artifactId>gherkin-binding</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.0</version>
 
 </project>

@@ -2,12 +2,6 @@ package com.memtrip.cucumber.smoothie.gherkin;
 
 import org.junit.Test;
 
-import javax.annotation.processing.Filer;
-
-import static junit.framework.TestCase.assertNotNull;
-import static junit.framework.TestCase.assertTrue;
-import static org.mockito.Mockito.mock;
-
 public class FileUtilTest {
 
     @Test
