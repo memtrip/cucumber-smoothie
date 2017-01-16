@@ -1,0 +1,43 @@
+package com.memtrip.cucumber.smoothie;
+
+import org.junit.Test;
+import java.text.SimpleDateFormat;
+
+<#list features as feature>
+    <#if feature.hasBackground()>
+        import ${feature.getBackground().getPackageName()};
+    </#if>
+
+    <#list feature.getScenarioPickles() as scenario>
+        import ${scenario.getPackageName()};
+    </#list>
+</#list>
+
+public class CucumberRunner {
+
+    <#list features as feature>
+
+            <#list feature.getScenarioPickles() as scenario>
+
+                @Test
+                public void ${feature.getClassName()}_${scenario.getClassName()}_${scenario.getOccurrence()}() throws Exception {
+
+                    <#if feature.hasBackground()>
+                        ${feature.getBackground().getClassName()} _${feature.getBackground().getClassName()} = new ${feature.getBackground().getClassName()}();
+                    </#if>
+
+                    ${scenario.getClassName()} _${scenario.getClassName()} = new ${scenario.getClassName()}();
+
+                    <#list scenario.getBehaviourPickles() as behaviour>
+                        <#if behaviour.isBackgroundBehaviour()>
+                            _${feature.getBackground().getClassName()}.${behaviour.getMethodName()}(${format_args(behaviour.getArguments())});
+                        <#else>
+                             _${scenario.getClassName()}.${behaviour.getMethodName()}(${format_args(behaviour.getArguments())});
+                        </#if>
+                    </#list>
+                }
+
+            </#list>
+
+    </#list>
+}
