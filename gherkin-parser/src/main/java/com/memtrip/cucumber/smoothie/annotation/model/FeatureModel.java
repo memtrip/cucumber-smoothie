@@ -20,6 +20,7 @@ import java.util.List;
 public class FeatureModel implements Model {
     private String featureFilePath;
     private String projectRootFolderName;
+    private boolean oneShot;
     private String className;
     private List<ScenarioModel> scenarios;
     private BackgroundModel background;
@@ -38,6 +39,14 @@ public class FeatureModel implements Model {
 
     public void setProjectRootFolderName(String projectRootName) {
         this.projectRootFolderName = projectRootName;
+    }
+
+    public boolean isOneShot() {
+        return oneShot;
+    }
+
+    public void setOneShot(boolean oneShot) {
+        this.oneShot = oneShot;
     }
 
     public String getClassName() {

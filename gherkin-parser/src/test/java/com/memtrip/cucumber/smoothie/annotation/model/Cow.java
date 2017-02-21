@@ -21,7 +21,8 @@ import java.util.Date;
 
 @Feature(
         projectRootFolderName="gherkin-parser",
-        featureFilePath="src/test/resources/cow.feature"
+        featureFilePath="src/test/resources/cow.feature",
+        oneShot = true
 )
 public class Cow {
 

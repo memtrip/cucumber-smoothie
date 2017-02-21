@@ -32,6 +32,7 @@ class FeatureGherkinAdapter {
     FeatureGherkin getFeatureGherkin(FeatureModel featureModel, List<Pickle> pickles) {
         FeatureGherkin featureGherkin = new FeatureGherkin();
         featureGherkin.setClassName(featureModel.getClassName());
+        featureGherkin.setOneShot(featureModel.isOneShot());
         featureGherkin.setScenarioPickles(scenarioPickleAdapter.getScenarioPickles(
                 featureModel.getScenarios(),
                 featureModel.getBackground(),

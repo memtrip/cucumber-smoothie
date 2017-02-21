@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -48,6 +49,7 @@ public class FeatureAdapterTest {
         ValueAdapter valueAdapter = mock(ValueAdapter.class);
         when(valueAdapter.value(element1, "projectRootFolderName")).thenReturn("gherkin-parser");
         when(valueAdapter.value(element1, "featureFilePath")).thenReturn("src/test/resources/cow.feature");
+        when(valueAdapter.value(element1, "oneShot")).thenReturn("true");
 
         ScenarioModel scenarioModel = new ScenarioModel();
         scenarioModel.setValue("Buy last coffee");
@@ -79,6 +81,7 @@ public class FeatureAdapterTest {
         assertEquals(1, features.size());
         assertEquals("gherkin-parser", features.get(0).getProjectRootFolderName());
         assertEquals("src/test/resources/cow.feature", features.get(0).getFeatureFilePath());
+        assertTrue(features.get(0).isOneShot());
         assertEquals("Buy last coffee", features.get(0).getScenarios().get(0).getValue());
         assertEquals("a $100 microwave was sold on 2015-11-03", features.get(0).getBackground().getBehaviours().get(0).getValue());
     }

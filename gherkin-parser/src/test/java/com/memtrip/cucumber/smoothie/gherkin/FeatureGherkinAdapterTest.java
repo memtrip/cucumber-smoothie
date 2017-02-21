@@ -23,6 +23,7 @@ import com.memtrip.cucumber.smoothie.gherkin.model.ScenarioPickle;
 import gherkin.pickles.Pickle;
 import gherkin.pickles.PickleLocation;
 import gherkin.pickles.PickleStep;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -70,12 +71,14 @@ public class FeatureGherkinAdapterTest {
         FeatureModel featureModel = new FeatureModel();
         featureModel.setClassName("Cow");
         featureModel.setScenarios(scenarios);
+        featureModel.setOneShot(true);
 
         // when
         FeatureGherkin featureGherkin = featureGherkinAdapter.getFeatureGherkin(featureModel, pickles);
 
         // then
         assertEquals("Cow", featureGherkin.getClassName());
+        assertTrue(featureGherkin.isOneShot());
         assertNotNull(featureGherkin.getScenarioPickles());
     }
 

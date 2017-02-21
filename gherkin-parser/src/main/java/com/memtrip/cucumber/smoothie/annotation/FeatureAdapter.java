@@ -44,6 +44,7 @@ class FeatureAdapter {
                 FeatureModel featureModel = new FeatureModel();
                 featureModel.setFeatureFilePath(valueAdapter.value(element, "featureFilePath"));
                 featureModel.setProjectRootFolderName(valueAdapter.value(element, "projectRootFolderName"));
+                featureModel.setOneShot(Boolean.parseBoolean(valueAdapter.value(element, "oneShot")));
                 featureModel.setClassName(typeAdapter.getName(element));
                 featureModel.setScenarios(scenarioAdapter.scenarios(element.getEnclosedElements()));
                 featureModel.setBackground(backgroundAdapter.background(element.getEnclosedElements()));

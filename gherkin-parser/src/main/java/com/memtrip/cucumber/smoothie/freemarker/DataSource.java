@@ -16,6 +16,7 @@
 package com.memtrip.cucumber.smoothie.freemarker;
 
 import com.memtrip.cucumber.smoothie.freemarker.methods.FormatBehaviourPickleArguments;
+import com.memtrip.cucumber.smoothie.freemarker.methods.UniqueFeatureBackgrounds;
 import com.memtrip.cucumber.smoothie.gherkin.model.FeatureGherkin;
 
 import java.util.HashMap;
@@ -28,6 +29,7 @@ class DataSource {
 
     private static final String FEATURES = "features";
     private static final String FORMAT_ARGS = "format_args";
+    private static final String GET_UNIQUE_BACKGROUNDS_FOR_FEATURE = "unique_backgrounds_for_feature";
 
     DataSource(List<FeatureGherkin> featureGherkins) {
         this.featureGherkins = featureGherkins;
@@ -37,6 +39,7 @@ class DataSource {
         Map<String, Object> map = new HashMap<>();
         map.put(FEATURES, featureGherkins);
         map.put(FORMAT_ARGS, new FormatBehaviourPickleArguments());
+        map.put(GET_UNIQUE_BACKGROUNDS_FOR_FEATURE, new UniqueFeatureBackgrounds());
         return map;
     }
 }

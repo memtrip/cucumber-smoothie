@@ -21,6 +21,7 @@ public class FeatureGherkin {
     private String className;
     private List<ScenarioPickle> scenarioPickles;
     private BackgroundGherkin backgroundGherkin;
+    private boolean oneShot;
 
     public String getClassName() {
         return className;
@@ -44,6 +45,14 @@ public class FeatureGherkin {
 
     public void setBackgroundGherkin(BackgroundGherkin backgroundGherkin) {
         this.backgroundGherkin = backgroundGherkin;
+    }
+
+    public boolean isOneShot() {
+        return oneShot;
+    }
+
+    public void setOneShot(boolean oneShot) {
+        this.oneShot = oneShot;
     }
 
     public boolean hasBackground() {
