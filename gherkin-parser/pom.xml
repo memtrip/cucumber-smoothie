@@ -8,6 +8,13 @@
     <artifactId>gherkin-parser</artifactId>
     <version>1.0.1</version>
 
+    <name>cucumber-smoothie - Gherkin parser</name>
+    <description>
+        Preprocesses cucumber annotations, parses Gherkin feature files and uses the result to generate a test runner for the cucumber step definitions 
+        defined by the developer.
+    </description>
+    <url>https://github.com/memtrip/cucumber-smoothie</url>
+
     <developers>
         <developer>
             <name>Samuel Kirton</name>
@@ -111,5 +118,18 @@
             </plugin>
         </plugins>
     </build>
+
+    <distributionManagement>
+        <repository>
+            <id>Bintray</id>
+            <url>https://api.bintray.com/maven/memtrip/maven/cucumber-smoothie-parser/;publish=1</url>
+        </repository>
+    </distributionManagement>
+
+    <scm>
+        <connection>scm:git:git@github.com:memtrip/cucumber-smoothie.git</connection>
+        <developerConnection>scm:git:git@github.com:memtrip/cucumber-smoothie.git</developerConnection>
+        <url>git@github.com:memtrip/cucumber-smoothie.git</url>
+    </scm>
 
 </project>
