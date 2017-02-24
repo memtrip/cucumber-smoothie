@@ -26,9 +26,11 @@ import java.util.List;
 class ScenarioPickleAdapter {
 
     private BehaviourPickleAdapter behaviourPickleAdapter;
+    private TagAdapter tagAdapter;
 
-    ScenarioPickleAdapter(BehaviourPickleAdapter behaviourPickleAdapter) {
+    ScenarioPickleAdapter(BehaviourPickleAdapter behaviourPickleAdapter, TagAdapter tagAdapter) {
         this.behaviourPickleAdapter = behaviourPickleAdapter;
+        this.tagAdapter = tagAdapter;
     }
 
     List<ScenarioPickle> getScenarioPickles(List<ScenarioModel> scenarios, BackgroundModel background, List<Pickle> pickles) {
@@ -54,6 +56,7 @@ class ScenarioPickleAdapter {
                     scenarioPickle.setBehaviourPickles(behaviourPickleAdapter.getBehaviourPickles(
                             scenarioModel.getBehaviours(),
                             pickle));
+                    scenarioPickle.setTags(tagAdapter.getTags(pickle));
                     scenarioPickles.add(scenarioPickle);
 
                     occurrence++;

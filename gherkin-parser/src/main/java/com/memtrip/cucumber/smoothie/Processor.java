@@ -21,6 +21,7 @@ import com.memtrip.cucumber.smoothie.annotation.model.FeatureModel;
 import com.memtrip.cucumber.smoothie.freemarker.Source;
 import com.memtrip.cucumber.smoothie.gherkin.GherkinAdapter;
 import com.memtrip.cucumber.smoothie.gherkin.model.FeatureGherkin;
+import com.memtrip.cucumber.smoothie.gherkin.model.Tag;
 import com.memtrip.cucumber.smoothie.spec.*;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -68,12 +69,44 @@ public class Processor extends AbstractProcessor {
     }
 
     private void generateSources(Set<? extends Element> elements) {
+        GherkinAdapter gherkinAdapter =  new GherkinAdapter(processingEnv.getFiler());
         List<FeatureModel> featureModels = new AnnotationAdapter().getFeatureAnnotations(elements);
-        List<FeatureGherkin> featureGherkins = new GherkinAdapter(processingEnv.getFiler()).getFeatureGherkin(featureModels);
+        List<FeatureGherkin> featureGherkins = gherkinAdapter.getFeatureGherkin(featureModels);
+        List<Tag> tags = gherkinAdapter.getUniqueTags(featureGherkins);
 
-        String sourceCode = source.generate(featureGherkins);
+        for (Tag tag : tags) {
+            generateTagRunners(featureGherkins, tag);
+        }
+
+        generateCucumberRunner(featureGherkins);
+    }
+
+    private void generateCucumberRunner(List<FeatureGherkin> featureGherkins) {
+        Log.note("Generate CucumberRunner");
+        String sourceCode = source.generate("cucumber.freemarker", featureGherkins);
         String formattedSourceCode = source.format(sourceCode);
+
         source.save("com.memtrip.cucumber.smoothie", "CucumberRunner", formattedSourceCode);
+    }
+
+    private void generateTagRunners(List<FeatureGherkin> featureGherkins, Tag tag) {
+        String runnerName = createTagRunnerName(tag);
+        Log.note("Generate " + runnerName);
+        String sourceCode = source.generate("cucumber_tag.freemarker", featureGherkins, tag);
+        String formattedSourceCode = source.format(sourceCode);
+
+        source.save("com.memtrip.cucumber.smoothie", runnerName, formattedSourceCode);
+    }
+
+    private String createTagRunnerName(Tag tag) {
+        String tagName = tag.getName();
+        tagName = tagName.replace("@", "");
+        tagName = capFirst(tagName);
+        return tagName + "Runner";
+    }
+
+    private String capFirst(final String line) {
+        return Character.toUpperCase(line.charAt(0)) + line.substring(1);
     }
 
     @Override

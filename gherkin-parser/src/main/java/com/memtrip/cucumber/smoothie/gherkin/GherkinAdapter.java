@@ -18,6 +18,8 @@ package com.memtrip.cucumber.smoothie.gherkin;
 import com.memtrip.cucumber.smoothie.Log;
 import com.memtrip.cucumber.smoothie.annotation.model.FeatureModel;
 import com.memtrip.cucumber.smoothie.gherkin.model.FeatureGherkin;
+import com.memtrip.cucumber.smoothie.gherkin.model.ScenarioPickle;
+import com.memtrip.cucumber.smoothie.gherkin.model.Tag;
 import gherkin.AstBuilder;
 import gherkin.Parser;
 import gherkin.pickles.Compiler;
@@ -43,7 +45,7 @@ public class GherkinAdapter {
 
         ArgumentAdapter argumentAdapter = new ArgumentAdapter(new ArgumentTypeMatcher());
         BehaviourPickleAdapter behaviourPickleAdapter = new BehaviourPickleAdapter(argumentAdapter);
-        ScenarioPickleAdapter scenarioPickleAdapter = new ScenarioPickleAdapter(behaviourPickleAdapter);
+        ScenarioPickleAdapter scenarioPickleAdapter = new ScenarioPickleAdapter(behaviourPickleAdapter, new TagAdapter());
         FeatureGherkinAdapter featureGherkinAdapter = new FeatureGherkinAdapter(scenarioPickleAdapter);
 
         for (FeatureModel featureModel : featureModels) {
@@ -58,5 +60,22 @@ public class GherkinAdapter {
         Log.note("Bound (" + featureGherkins.size() + ") features.");
 
         return featureGherkins;
+    }
+
+    public List<Tag> getUniqueTags(List<FeatureGherkin> featureGherkins) {
+        List<Tag> tags = new ArrayList<>();
+
+        for (FeatureGherkin featureGherkin : featureGherkins) {
+            for (ScenarioPickle scenarioPickle : featureGherkin.getScenarioPickles()) {
+                List<Tag> scenarioTags = scenarioPickle.getTags();
+                for (Tag scenarioTag : scenarioTags) {
+                    if (!tags.contains(scenarioTag)) {
+                        tags.add(scenarioTag);
+                    }
+                }
+            }
+        }
+
+        return tags;
     }
 }

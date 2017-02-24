@@ -20,6 +20,7 @@ import com.memtrip.cucumber.smoothie.annotation.model.ScenarioModel;
 import com.memtrip.cucumber.smoothie.annotation.model.behaviour.BehaviourModel;
 import com.memtrip.cucumber.smoothie.gherkin.model.BehaviourPickle;
 import com.memtrip.cucumber.smoothie.gherkin.model.ScenarioPickle;
+import com.memtrip.cucumber.smoothie.gherkin.model.Tag;
 import gherkin.pickles.Pickle;
 import gherkin.pickles.PickleLocation;
 import gherkin.pickles.PickleStep;
@@ -79,7 +80,32 @@ public class ScenarioPickleAdapterTest {
         when(behaviourPickleAdapter.getBehaviourPickles(getBehaviours1(), pickle1)).thenReturn(behaviourPickles1);
         when(behaviourPickleAdapter.getBehaviourPickles(getBehaviours2(), pickle2)).thenReturn(behaviourPickles2);
 
-        ScenarioPickleAdapter scenarioPickleAdapter = new ScenarioPickleAdapter(behaviourPickleAdapter);
+        List<Tag> tags1 = new ArrayList<>();
+        {
+            Tag tag1 = new Tag();
+            tag1.setName("@android");
+
+            Tag tag2 = new Tag();
+            tag2.setName("@ios");
+
+            Tag tag3 = new Tag();
+            tag3.setName("@offline");
+        }
+
+        List<Tag> tags2 = new ArrayList<>();
+        {
+            Tag tag1 = new Tag();
+            tag1.setName("@acceptance");
+
+            Tag tag2 = new Tag();
+            tag2.setName("@backend");
+        }
+
+        TagAdapter tagAdapter = mock(TagAdapter.class);
+        when(tagAdapter.getTags(pickle1)).thenReturn(tags1);
+        when(tagAdapter.getTags(pickle2)).thenReturn(tags2);
+
+        ScenarioPickleAdapter scenarioPickleAdapter = new ScenarioPickleAdapter(behaviourPickleAdapter, tagAdapter);
 
         // when
         List<ScenarioPickle> scenarioPickles = scenarioPickleAdapter.getScenarioPickles(
@@ -107,6 +133,11 @@ public class ScenarioPickleAdapterTest {
         assertEquals(behaviourPickles1, scenarioPickles.get(1).getBehaviourPickles());
         assertEquals(behaviourPickles2, scenarioPickles.get(2).getBehaviourPickles());
         assertEquals(behaviourPickles2, scenarioPickles.get(3).getBehaviourPickles());
+
+        assertEquals(tags1, scenarioPickles.get(0).getTags());
+        assertEquals(tags1, scenarioPickles.get(1).getTags());
+        assertEquals(tags2, scenarioPickles.get(2).getTags());
+        assertEquals(tags2, scenarioPickles.get(3).getTags());
     }
 
     @Test
@@ -168,7 +199,32 @@ public class ScenarioPickleAdapterTest {
         when(behaviourPickleAdapter.getBehaviourPickles(behaviourModels1, pickle1)).thenReturn(behaviourPickles1);
         when(behaviourPickleAdapter.getBehaviourPickles(behaviourModels2, pickle2)).thenReturn(behaviourPickles2);
 
-        ScenarioPickleAdapter scenarioPickleAdapter = new ScenarioPickleAdapter(behaviourPickleAdapter);
+        List<Tag> tags1 = new ArrayList<>();
+        {
+            Tag tag1 = new Tag();
+            tag1.setName("@android");
+
+            Tag tag2 = new Tag();
+            tag2.setName("@ios");
+
+            Tag tag3 = new Tag();
+            tag3.setName("@offline");
+        }
+
+        List<Tag> tags2 = new ArrayList<>();
+        {
+            Tag tag1 = new Tag();
+            tag1.setName("@acceptance");
+
+            Tag tag2 = new Tag();
+            tag2.setName("@backend");
+        }
+
+        TagAdapter tagAdapter = mock(TagAdapter.class);
+        when(tagAdapter.getTags(pickle1)).thenReturn(tags1);
+        when(tagAdapter.getTags(pickle2)).thenReturn(tags2);
+
+        ScenarioPickleAdapter scenarioPickleAdapter = new ScenarioPickleAdapter(behaviourPickleAdapter, tagAdapter);
 
         // when
         List<ScenarioPickle> scenarioPickles = scenarioPickleAdapter.getScenarioPickles(
@@ -196,6 +252,11 @@ public class ScenarioPickleAdapterTest {
         assertEquals(behaviourPickles1, scenarioPickles.get(1).getBehaviourPickles());
         assertEquals(behaviourPickles2, scenarioPickles.get(2).getBehaviourPickles());
         assertEquals(behaviourPickles2, scenarioPickles.get(3).getBehaviourPickles());
+
+        assertEquals(tags1, scenarioPickles.get(0).getTags());
+        assertEquals(tags1, scenarioPickles.get(1).getTags());
+        assertEquals(tags2, scenarioPickles.get(2).getTags());
+        assertEquals(tags2, scenarioPickles.get(3).getTags());
     }
 
     private List<BehaviourModel> getBehaviours1() {

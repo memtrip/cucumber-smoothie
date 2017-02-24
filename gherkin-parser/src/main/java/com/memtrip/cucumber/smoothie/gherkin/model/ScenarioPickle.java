@@ -21,6 +21,7 @@ public class ScenarioPickle {
     private String className;
     private String packageName;
     private List<BehaviourPickle> behaviourPickles;
+    private List<Tag> tags;
     private int occurrence;
 
     public String getClassName() {
@@ -45,6 +46,14 @@ public class ScenarioPickle {
 
     public void setBehaviourPickles(List<BehaviourPickle> behaviourPickles) {
         this.behaviourPickles = behaviourPickles;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
     }
 
     public int getOccurrence() {

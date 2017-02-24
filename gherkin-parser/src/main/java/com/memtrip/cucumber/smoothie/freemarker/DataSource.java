@@ -16,8 +16,9 @@
 package com.memtrip.cucumber.smoothie.freemarker;
 
 import com.memtrip.cucumber.smoothie.freemarker.methods.FormatBehaviourPickleArguments;
-import com.memtrip.cucumber.smoothie.freemarker.methods.UniqueFeatureBackgrounds;
+import com.memtrip.cucumber.smoothie.freemarker.methods.ScenarioContainsTag;
 import com.memtrip.cucumber.smoothie.gherkin.model.FeatureGherkin;
+import com.memtrip.cucumber.smoothie.gherkin.model.Tag;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,20 +27,28 @@ import java.util.Map;
 class DataSource {
 
     private List<FeatureGherkin> featureGherkins;
+    private Tag tag;
 
     private static final String FEATURES = "features";
+    private static final String TAG = "tag";
     private static final String FORMAT_ARGS = "format_args";
-    private static final String GET_UNIQUE_BACKGROUNDS_FOR_FEATURE = "unique_backgrounds_for_feature";
+    private static final String SCENARIO_CONTAINS_TAG = "scenario_contains_tag";
 
     DataSource(List<FeatureGherkin> featureGherkins) {
         this.featureGherkins = featureGherkins;
     }
 
+    DataSource(List<FeatureGherkin> featureGherkins, Tag tag) {
+        this.featureGherkins = featureGherkins;
+        this.tag = tag;
+    }
+
     Map<String, Object> map() {
         Map<String, Object> map = new HashMap<>();
         map.put(FEATURES, featureGherkins);
+        map.put(TAG, tag);
         map.put(FORMAT_ARGS, new FormatBehaviourPickleArguments());
-        map.put(GET_UNIQUE_BACKGROUNDS_FOR_FEATURE, new UniqueFeatureBackgrounds());
+        map.put(SCENARIO_CONTAINS_TAG, new ScenarioContainsTag());
         return map;
     }
 }

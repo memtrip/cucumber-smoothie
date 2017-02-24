@@ -19,6 +19,7 @@ import com.google.googlejavaformat.java.Formatter;
 import com.google.googlejavaformat.java.FormatterException;
 import com.memtrip.cucumber.smoothie.Log;
 import com.memtrip.cucumber.smoothie.gherkin.model.FeatureGherkin;
+import com.memtrip.cucumber.smoothie.gherkin.model.Tag;
 
 import javax.annotation.processing.Filer;
 import javax.tools.JavaFileObject;
@@ -35,9 +36,12 @@ public class Source {
         freeMarker = new FreeMarker();
     }
 
-    public String generate(List<FeatureGherkin> featureGherkins) {
-        Log.note("Generating test suite...");
-        return freeMarker.generate("cucumber.freemarker", new DataSource(featureGherkins));
+    public String generate(String freemarkerTemplate, List<FeatureGherkin> featureGherkins, Tag tag) {
+        return freeMarker.generate(freemarkerTemplate, new DataSource(featureGherkins, tag));
+    }
+
+    public String generate(String freemarkerTemplate, List<FeatureGherkin> featureGherkins) {
+        return freeMarker.generate(freemarkerTemplate, new DataSource(featureGherkins));
     }
 
     public String format(String source) {
@@ -58,6 +62,7 @@ public class Source {
             writer.close();
             return true;
         } catch (Exception e) {
+            Log.error(e.getMessage());
             return false;
         }
     }
