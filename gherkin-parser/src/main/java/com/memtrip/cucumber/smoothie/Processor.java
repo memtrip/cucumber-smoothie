@@ -72,6 +72,9 @@ public class Processor extends AbstractProcessor {
         GherkinAdapter gherkinAdapter =  new GherkinAdapter(processingEnv.getFiler());
         List<FeatureModel> featureModels = new AnnotationAdapter().getFeatureAnnotations(elements);
         List<FeatureGherkin> featureGherkins = gherkinAdapter.getFeatureGherkin(featureModels);
+
+
+
         List<Tag> tags = gherkinAdapter.getUniqueTags(featureGherkins);
 
         for (Tag tag : tags) {

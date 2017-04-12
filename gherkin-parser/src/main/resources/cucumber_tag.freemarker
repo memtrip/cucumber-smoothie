@@ -1,8 +1,10 @@
 package com.memtrip.cucumber.smoothie;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import java.text.SimpleDateFormat;
 
+@Ignore
 public class ${tag.getName()?replace("@", "")?cap_first}Runner {
 
     <#list features as feature>
@@ -41,25 +43,29 @@ public class ${tag.getName()?replace("@", "")?cap_first}Runner {
 
             <#list feature.getScenarioPickles() as scenario>
 
-                @Test
-                public void ${feature.getClassName()}_${scenario.getClassName()}_${scenario.getOccurrence()}() throws Exception {
+                <#if scenario_contains_tag(tag, scenario)>
 
-                    <#if feature.hasBackground()>
-                        ${feature.getBackground().getPackageName()} _${feature.getBackground().getClassName()} =
-                            new ${feature.getBackground().getPackageName()}();
-                    </#if>
+                    @Test
+                    public void ${feature.getClassName()}_${scenario.getClassName()}_${scenario.getOccurrence()}() throws Exception {
 
-                    ${scenario.getPackageName()} _${scenario.getClassName()} =
-                        new ${scenario.getPackageName()}();
-
-                    <#list scenario.getBehaviourPickles() as behaviour>
-                        <#if behaviour.isBackgroundBehaviour()>
-                            _${feature.getBackground().getClassName()}.${behaviour.getMethodName()}(${format_args(behaviour.getArguments())});
-                        <#else>
-                             _${scenario.getClassName()}.${behaviour.getMethodName()}(${format_args(behaviour.getArguments())});
+                        <#if feature.hasBackground()>
+                            ${feature.getBackground().getPackageName()} _${feature.getBackground().getClassName()} =
+                                new ${feature.getBackground().getPackageName()}();
                         </#if>
-                    </#list>
-                }
+
+                        ${scenario.getPackageName()} _${scenario.getClassName()} =
+                            new ${scenario.getPackageName()}();
+
+                        <#list scenario.getBehaviourPickles() as behaviour>
+                            <#if behaviour.isBackgroundBehaviour()>
+                                _${feature.getBackground().getClassName()}.${behaviour.getMethodName()}(${format_args(behaviour.getArguments())});
+                            <#else>
+                                 _${scenario.getClassName()}.${behaviour.getMethodName()}(${format_args(behaviour.getArguments())});
+                            </#if>
+                        </#list>
+                    }
+
+                </#if>
 
             </#list>
 

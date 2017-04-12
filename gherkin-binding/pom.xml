@@ -6,7 +6,7 @@
 
     <groupId>com.memtrip.cucumber.smoothie</groupId>
     <artifactId>gherkin-binding</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
 
 	<name>cucumber-smoothie - Gherkin bindings</name>
     <description>

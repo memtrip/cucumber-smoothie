@@ -1,8 +1,10 @@
 package com.memtrip.cucumber.smoothie;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import java.text.SimpleDateFormat;
 
+@Ignore
 public class CucumberRunner {
 
     <#list features as feature>
