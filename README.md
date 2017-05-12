@@ -5,15 +5,7 @@ Cucumber Smoothie
 
 Cucumber Smoothie is an alternative to cucumber-jvm that is designed specifically for the Android instrumentation framework. Step definitions are defined in the same way as cucumber-jvm, the annotations are preprocessed to generate a CucumberRunner that contains a series of tests that execute the step definitions.
 
-###Android gradle tools < 2.2.0 (https://bitbucket.org/hvisser/android-apt)###
-```groovy
-dependencies {
-    androidTestCompile 'com.memtrip.cucumber.smoothie:gherkin-binding:1.0.0'
-    androidTestApt 'com.memtrip.cucumber.smoothie:gherkin-parser:1.0.0'
-}
-```
-
-###Android gradle tools 2.2.0+###
+### Gradle dependencies
 ```groovy
 dependencies {
     androidTestCompile 'com.memtrip.cucumber.smoothie:gherkin-binding:1.0.0'
@@ -21,7 +13,7 @@ dependencies {
 }
 ```
 
-###Define a Gherkin feature file###
+### Define a Gherkin feature file
 ```
 Feature: Cow
 
@@ -44,7 +36,7 @@ Feature: Cow
             |    6.31 |  370   |     305 |
 ```
 
-###Bind the Gherkin behaviour to step definitions###
+### Bind the Gherkin behaviour to step definitions
 The step definitions are bound in the same way as cucumber-jvm. However, the Feature annotation must supply the name of the projects root folder and the relative path to the feature file. *These values are used internally by the preprocessor to work out the absolute path of the .feature file*
 
 ```java
@@ -99,7 +91,7 @@ public class Cow {
 }
 ```
 
-###Usage###
+### Usage
 The annotation preprocessor will generate a class at `com.memtrip.cucumber.smoothie.CucumberRunner`. To run the step definitions as tests, a child of CucumberRunner must be created and annotated with `@RunWith(AndroidJUnit4.class)`
 
 ```
@@ -113,10 +105,10 @@ public class MyCucumberRunner extends CucumberRunner {
 }
 ``` 
 
-###Gherkin reference###
+### Gherkin reference
 - https://cucumber.io/docs/reference
 
-###TODO###
+### TODO
 - Tags
 - List arguments
 - Match with regular expressions
