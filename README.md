@@ -3,13 +3,13 @@ Cucumber Smoothie
 
 ![alt text](http://oi63.tinypic.com/zkobjq.jpg "Cucumber smoothie")
 
-Cucumber Smoothie is an alternative to cucumber-jvm that is designed specifically for the Android instrumentation framework. Step definitions are defined in the same way as cucumber-jvm, the annotations are preprocessed to generate a CucumberRunner that contains a series of tests that execute the step definitions.
+Cucumber Smoothie is an alternative to cucumber-jvm that is designed specifically for the Android instrumentation framework. Step definitions are defined in the same way as cucumber-jvm, the annotations are preprocessed to generate a CucumberRunner class that contains a series of tests that execute the step definitions.
 
 ### Gradle dependencies
 ```groovy
 dependencies {
-    androidTestCompile 'com.memtrip.cucumber.smoothie:gherkin-binding:1.0.0'
-    androidTestAnnotationProcessor 'com.memtrip.cucumber.smoothie:gherkin-parser:1.0.0'
+    androidTestCompile 'com.memtrip.cucumber.smoothie:gherkin-binding:1.0.3'
+    androidTestAnnotationProcessor 'com.memtrip.cucumber.smoothie:gherkin-parser:1.0.3'
 }
 ```
 
@@ -103,13 +103,41 @@ import org.junit.runner.RunWith;
 public class MyCucumberRunner extends CucumberRunner {
     // this will run all the step definitions that are bound to .feature files
 }
-``` 
+```
+
+### Tags
+Cucumber tags are supported.
+
+```
+Feature: Cow
+
+    Background:
+        Given a cow that was born on 2016-12-01 is called "Nelly Newton"
+
+    @acceptance
+    Scenario: a cow is ready to be milked
+        Given the cow weighs more than 150 kg
+        And the cow is more than 1 years 6 months and 31 days old
+        When the date is 2016-10-22
+        Then the cow should be milked
+```
+
+Seperate Runner classes are generated per tag in the format of; {tagName}Runner, a child of these runner classes must be created to run Tag specific tests.
+```
+import com.memtrip.cucumber.smoothie.AcceptanceRunner;
+
+import org.junit.runner.RunWith;
+
+@RunWith(AndroidJUnit4.class)
+public class MyAcceptanceRunner extends AcceptanceRunner {
+    // this will run the step definitions that are tagged with @acceptance in the feature file
+}
+```
 
 ### Gherkin reference
 - https://cucumber.io/docs/reference
 
 ### TODO
-- Tags
 - List arguments
 - Match with regular expressions
 - Validation: At least one scenario annotation is required per feature annotation
