@@ -5,6 +5,9 @@ Cucumber Smoothie
 
 Cucumber Smoothie is an alternative to cucumber-jvm that is designed specifically for the Android instrumentation framework. Step definitions are defined in the same way as cucumber-jvm, the annotations are preprocessed to generate a CucumberRunner class that contains a series of tests that execute the step definitions.
 
+### What is the difference between cucumber-smoothie and cucumber-jvm?
+We found that cucumber-jvm did not return enough debug output when it is used with the Android Instrumentation Framework. Cucumber smoothie provides a validation layer to help debug Step definition / Feature file naming descripencies, it also replaces the clunky CucumberInstrumentation with a preprocessor that generates the unit test runners, as a developer you have flexibility in which Runners are used.
+
 ### Gradle dependencies
 ```groovy
 dependencies {
